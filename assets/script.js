@@ -56,5 +56,13 @@ $(function () {
     });
   };
 
+  //save button function
+  $(".saveBtn").on("click", function(){
+    var hour = $(this).parent().attr("id");
+    var event = $(this).siblings(".description").val();
+    localStorage.setItem(hour, event);
+  });
+
+  initPlanner();
 
 });
