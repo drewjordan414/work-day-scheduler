@@ -41,10 +41,18 @@ $(function () {
       $(this).removeClass("past");
       $(this).removeClass("present");
       $(this).addClass("future");
-
     }
+
+    $(".timeBlock").each(function () {
+      var id = $(this).attr("id");
+      var userInput = localStorage.getItem(hour);
+      $(this).children("textarea").val(userInput);
+    });
   });
-  
+
+  var currentDate = dayks().format("dddd, MMMM Do");
+  $("#currentDay").text(currentDate);
+
 
 
 
