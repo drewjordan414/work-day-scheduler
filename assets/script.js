@@ -22,36 +22,32 @@
 // });
 
 //global variables
-var currentTime = dayjs().format("HH:MM");
+var currentTime = parseInt(dayjs().format("HH:MM"));
 console.log(currentTime);
 var currentDay = dayjs().format("dddd, MMMM D, YYYY");
 console.log(currentDay);
 
 //functions
 function main() {
-  function timeCheck() {
+  function checkTime() {
     for (i = 9; i < 18; i++) {
-      var hour = i;
-      var hourString = hour.toString();
-      var hourId = "#hour-" + hourString;
-      console.log(hourId);
-      if (hour < currentTime) {
-        $(hourId).addClass("past");
+      var hour = $("#hour-" + i);
+      var hourTime = parseInt(hour.attr("id").split("-")[1]);
+      hour.removeClass("past present future");
+
+      if(hourValue === currentTime) {
+        hour.addClass("present");
+      } else if (hourValue < currentTime) {
+        hour.addClass("past");
+      } else if (hourValue > currentTime) {
+        hour.addClass("future");
       }
     }
-  }
-  timeCheck();
+
+  }  
   $("#currentDay").text(currentDay);
+  checkTime();
 
-  //save button
-  $(".saveBtn").on("click", function () {
-    var text = $(this).siblings(".description").val();
-    var time = $(this).parent().attr("id");
-    console.log(text);
-  });
-  
-
-}
-
+};
 
 main();
