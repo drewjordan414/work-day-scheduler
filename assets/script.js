@@ -21,23 +21,26 @@
 //   // TODO: Add code to display the current date in the header of the page.
 // });
 
-
 //global variables
+var currentTime = dayjs().format("HH:MM");
+console.log(currentTime);
 var currentDay = dayjs().format("dddd, MMMM D, YYYY");
 console.log(currentDay);
-var currentTime = dayjs().format("HH");
-console.log(currentTime);
 
 //functions
 function main() {
-  function displayCurrentDay() {
-    $("#currentDay").text(currentDay);
+  function timeCheck() {
+    for (i = 9; i < 18; i++) {
+      var hour = i;
+      var hourString = hour.toString();
+      var hourId = "#hour-" + hourString;
+      console.log(hourId);
+      if (hour < currentTime) {
+        $(hourId).addClass("past");
+      }
+    }
   }
-  displayCurrentDay();
-  
+}
 
-
-
-};
 
 main();
