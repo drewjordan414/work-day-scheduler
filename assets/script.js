@@ -21,51 +21,23 @@
 //   // TODO: Add code to display the current date in the header of the page.
 // });
 
+
+//global variables
 var currentDay = dayjs().format("dddd, MMMM D, YYYY");
+console.log(currentDay);
 var currentTime = dayjs().format("HH");
+console.log(currentTime);
 
-$(function () {
-  function initPlanner(){
-    var currentDate = moment().format('dddd, MMMM Do YYYY');
-    $("#currentDay").text(currentDate);
-    $(".time-block").each(function(){
-      var hour = $(this).attr("id");
-      var saveEvent = localStorage.getItem(hour);
-      //loop through each time block and compare to current time
-      if (saveEvent){
-        $(this).find("textarea").val(saveEvent);
-      }
-    });
-    updateColorCoding();
+//functions
+function main() {
+  function displayCurrentDay() {
+    $("#currentDay").text(currentDay);
   }
-  //color coding for past, present, future function
-  function updateColorCoding(){
-    var currentHour = moment().hours();
-    $(".time-block").each(function(){
-      var blockHour = parseInt($(this).attr("id").split("-")[1]);
-      if (blockHour < currentHour){
-        $(this).removeClass("future");
-        $(this).removeClass("present");
-        $(this).addClass("past");
-      } else if (blockHour === currentHour){
-        $(this).removeClass("past");
-        $(this).removeClass("future");
-        $(this).addClass("present");
-      } else{
-        $(this).removeClass("present");
-        $(this).removeClass("past");
-        $(this).addClass("future");
-      }
-    });
-  };
+  displayCurrentDay();
+  
 
-  //save button function
-  $(".saveBtn").on("click", function(){
-    var hour = $(this).parent().attr("id");
-    var event = $(this).siblings(".description").val();
-    localStorage.setItem(hour, event);
-  });
 
-  initPlanner();
 
-});
+};
+
+main();
