@@ -40,6 +40,17 @@ function main() {
       }
     }
   }
+  timeCheck();
+  $("#currentDay").text(currentDay);
+
+  //save button
+  $(".saveBtn").on("click", function () {
+    var text = $(this).siblings(".description").val();
+    var time = $(this).parent().attr("id");
+    console.log(text);
+  });
+  
+
 }
 
 
