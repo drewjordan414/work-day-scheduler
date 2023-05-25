@@ -22,39 +22,39 @@
 // });
 
 $(function () {
-  $(".saveBtn").on("click", function () {
-    var hour = $(this).parent().attr("id");
-    var uerInput = $(this).siblings(".description").val();
-    localStorage.setItem(hour, uerInput);
-  });
-  var currentHour = moment().hours();
-
-  $(".time-block").each(function () {
-    var blockHour = parseInt($(this).attr("id").split("-")[1]);
-
-    if (blockHour < currentHour) {
-      $(this).addClass("past");
-    } else if (blockHour === currentHour) {
-      $(this).removeClass("past");
-      $(this).addClass("present");
-    } else {
-      $(this).removeClass("past");
-      $(this).removeClass("present");
-      $(this).addClass("future");
-    }
-
-    $(".timeBlock").each(function () {
-      var id = $(this).attr("id");
-      var userInput = localStorage.getItem(hour);
-      $(this).children("textarea").val(userInput);
+  function initPlanner(){
+    var currentDate = moment().format('dddd, MMMM Do YYYY');
+    $("#currentDay").text(currentDate);
+    $(".time-block").each(function(){
+      var hour = $(this).attr("id");
+      var saveEvent = localStorage.getItem(hour);
+      //loop through each time block and compare to current time
+      if (saveEvent){
+        $(this).find("textarea").val(saveEvent);
+      }
     });
-  });
-
-  var currentDate = dayks().format("dddd, MMMM Do");
-  $("#currentDay").text(currentDate);
-
-
-
+    updateColorCoding();
+  }
+  //color coding for past, present, future function
+  function updateColorCoding(){
+    var currentHour = moment().hours();
+    $(".time-block").each(function(){
+      var blockHour = parseInt($(this).attr("id").split("-")[1]);
+      if (blockHour < currentHour){
+        $(this).removeClass("future");
+        $(this).removeClass("present");
+        $(this).addClass("past");
+      } else if (blockHour === currentHour){
+        $(this).removeClass("past");
+        $(this).removeClass("future");
+        $(this).addClass("present");
+      } else{
+        $(this).removeClass("present");
+        $(this).removeClass("past");
+        $(this).addClass("future");
+      }
+    });
+  };
 
 
 });
