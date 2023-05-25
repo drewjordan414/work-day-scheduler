@@ -21,6 +21,9 @@
 //   // TODO: Add code to display the current date in the header of the page.
 // });
 
+var currentDay = dayjs().format("dddd, MMMM D, YYYY");
+var currentTime = dayjs().format("HH");
+
 $(function () {
   function initPlanner(){
     var currentDate = moment().format('dddd, MMMM Do YYYY');
