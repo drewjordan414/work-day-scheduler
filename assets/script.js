@@ -13,10 +13,10 @@ $(document).ready(function () {
   });
   function timeCheck() {
     for (i = 9; i < 18; i++) {
-      var hour = $("#h00" + i).attr("id");
-      if ($(hour).attr("id") === (0 + currentTime)) {
+      var hour = "#h0" + (i-9)
+      if (parseInt($(hour).attr("id").substring(2)) + 9 === currentTime / 100) {
         $(hour).addClass("present");
-      } else if (Number(($(hour).attr("id"))) < (0 + currentTime)) {
+      } else if (parseInt($(hour).attr("id").substring(2)) + 9 < currentTime / 100) {
         $(hour).addClass("past");
       } else {
         $(hour).addClass("future");
