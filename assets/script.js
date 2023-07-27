@@ -5,7 +5,7 @@ var currentDay = dayjs().format("dddd, MMMM D, YYYY");
 console.log(currentDay);
 
 //functions
-function clear(isTrue){
+function clearModal(isTrue){
   if(isTrue){
     localStorage.clear();
     getSavedItems();
