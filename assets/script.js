@@ -13,6 +13,7 @@ function clear(isTrue){
   $('#modal').modal('hide');  
 }
 
+//check time
 function checkTime(){
   for (i=9; i<18; i++){
     var hour = $("#0" + i);
@@ -26,6 +27,7 @@ function checkTime(){
   }
 }
 
+// check local storage for saved items
 function getSavedItems(){
   for (i = 9; i < 18; i++) {
     var key = '0' + i;
@@ -34,3 +36,32 @@ function getSavedItems(){
   }
 }
 
+// check if date is stored in local storage and compare to current date
+function clearCalOnNewDay() {
+  var date = localStorage.getItem('date');
+  if(!date) return;
+  if (date !== dayjs().format('dddd, MMMM D, YYYY')) { 
+    $('#modalLabel').text(currentDate);
+    $('#modal').modal('show');
+  }
+}
+
+// jquery
+$(document).ready(function () {
+  $('.saveBtn').on('click', function (event) {
+    event.preventDefault();
+    var time = $(this).parent().attr('id');
+    var text = $(this).siblings('.description').val();
+    localStorage.setItem(time, text);
+    localStorage.setItem('date', dayjs().format('dddd, MMMM D, YYYY'));
+  });
+
+  // display current time and day 
+  $('#currentDay').text(currentDay);
+
+  // call functions
+  checkTime();
+  setInterval(checkTime, 30000);
+  getSavedItems();
+  clearCalOnNewDay();
+});
