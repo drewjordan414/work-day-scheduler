@@ -1,5 +1,6 @@
 // need to add more hours for input to workday > HTML
 // display current day and time
+
 // functionality for the save button.. adeventListener need to store input to the local storage
 
 //create timer function 
