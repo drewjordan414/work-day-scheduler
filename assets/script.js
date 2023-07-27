@@ -1,8 +1,6 @@
 //global variables
-var currentTime = parseInt(dayjs().format("HH:MM"));
-console.log(currentTime);
+var currentHour = parseInt(dayjs().format("HH"));
 var currentDay = dayjs().format("dddd, MMMM D, YYYY");
-console.log(currentDay);
 
 //functions
 function clearModal(isTrue){
@@ -15,14 +13,15 @@ function clearModal(isTrue){
 
 //check time
 function checkTime(){
-  for (i=9; i<18; i++){
-    var hour = $("#0" + i);
-    if (($(hour).attr('id')) === (0 + currentTime)) {
-      hour.addClass('present');
-    } else if (Number(($(hour).attr('id'))) < (0 + currentTime)) {
-      hour.addClass('past');
+  for (i = 9; i < 18; i++){
+    var hourRow = $("#" + ("0" + i).slice(-2)); 
+    var hour = parseInt(hourRow.attr('id'));
+    if (hour === currentHour) {
+      hourRow.addClass('present');
+    } else if (hour < currentHour) {
+      hourRow.addClass('past');
     } else {
-      hour.addClass('future');
+      hourRow.addClass('future');
     }
   }
 }
@@ -31,8 +30,8 @@ function checkTime(){
 function getSavedItems(){
   for (i = 9; i < 18; i++) {
     var key = '0' + i;
-    var info = $('.description');
-    $('#0' + i).children(info).val(localStorage.getItem(key));
+    var info = $('#' + key + ' .description');
+    info.val(localStorage.getItem(key));
   }
 }
 
@@ -40,8 +39,8 @@ function getSavedItems(){
 function clearCalOnNewDay() {
   var date = localStorage.getItem('date');
   if(!date) return;
-  if (date !== dayjs().format('dddd, MMMM D, YYYY')) { 
-    $('#modalLabel').text(currentDate);
+  if (date !== currentDay) { 
+    $('#modalLabel').text(currentDay);
     $('#modal').modal('show');
   }
 }
@@ -53,7 +52,7 @@ $(document).ready(function () {
     var time = $(this).parent().attr('id');
     var text = $(this).siblings('.description').val();
     localStorage.setItem(time, text);
-    localStorage.setItem('date', dayjs().format('dddd, MMMM D, YYYY'));
+    localStorage.setItem('date', currentDay);
   });
 
   // display current time and day 
@@ -61,7 +60,7 @@ $(document).ready(function () {
 
   // call functions
   checkTime();
-  setInterval(checkTime, 30000);
+  setInterval(checkTime, 60000);
   getSavedItems();
   clearCalOnNewDay();
 });
